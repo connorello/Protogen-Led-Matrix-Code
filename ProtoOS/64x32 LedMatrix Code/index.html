@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIF Controller</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            min-width: 150px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 600px) {
+            button {
+                width: 90%;
+                font-size: 1.4em;
+            }
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Select a GIF to Run</h1>
+    <div class="button-container">
+        {% for gif_file in gif_files %}
+            <button onclick="runGif('{{ gif_file }}')">{{ gif_file }}</button>
+        {% endfor %}
+    </div>
+
+    <script>
+        function runGif(gifFile) {
+            $.post("/run_gif", { gif_file: gifFile }, function(data) {
+                alert(data.message);
+            });
+        }
+    </script>
+</body>
+</html>
